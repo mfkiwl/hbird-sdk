@@ -1,20 +1,23 @@
 # HummingBird RISC-V Software Development Kit
 
-**HummingBird RISC-V Development Kit(HummingBird SDK)** is developed for developing and evaluating software using our FPGA evaluation board.
+[![Build Documentation](https://github.com/riscv-mcu/hbird-sdk/workflows/Build%20Documentation/badge.svg)](https://github.com/riscv-mcu/hbird-sdk/actions?query=workflow%3A%22Build+Documentation%22)
+[![Build SDK](https://github.com/riscv-mcu/hbird-sdk/workflows/Build%20SDK/badge.svg)](https://github.com/riscv-mcu/hbird-sdk/actions?query=workflow%3A%22Build+SDK%22)
+
+**HummingBird RISC-V Software Development Kit(HBird SDK)** is developed for developing and evaluating software using our FPGA evaluation board.
 
 ![HummingBird SDK Diagram](doc/source/asserts/images/hbird_sdk_diagram.png)
 
 This HummingBird SDK is built based on the modified **NMSIS** framework, user can access all the APIs provided by modified **NMSIS** and also the APIs that provided by HummingBird SDK which mainly for on-board peripherals access such as GPIO, UART, SPI and I2C etc.
 
 > **IMPORTANT NOTICE**
-  * The **NMSIS** used in this HummingBird SDK is **modified** for HummingBird RISC-V Core, which is not compatiable with **Nuclei NMSIS**, take care.
+  * The **NMSIS** used in this HummingBird SDK is **modified** for HummingBird E203 RISC-V Core, which is not compatiable with **Nuclei NMSIS**, take care.
   * HummingBird SDK is developed based on [Nuclei SDK](https://github.com/Nuclei-Software/nuclei-sdk) 0.2.4 release, and will diverge in future.
 
 We also intergated three RTOSes into HummingBird SDK, which are **FreeRTOS**, **UCOSII** and **RTThread**, you can easily find it in the *OS* folder.
 
 ## Quick Startup
 
-Wanner to a try with HummingBird SDK, click [Quick Start with HummingBird SDK](https://doc.nucleisys.com/hbird_sdk/quickstart.html) to start up.
+Wanner to a try with HummingBird SDK, click [Quick Start with HummingBird SDK](https://doc.nucleisys.com/hbirdv2/quick_start/sdk.html) to start up.
 
 ## Requirements
 * Ubuntu Linux >=16.04 LTS or Windows >=7
@@ -96,7 +99,7 @@ $HBIRD_SDK_ROOT
 
   This directory contains all the supported SoCs for this HummingBird SDK, the directory name for SoC and its boards should always in lower case.
 
-  Here we mainly support Nuclei processor cores running in Hummingbird FPGA evaluation board, the support package placed in *SoC/hbird/* and *SoC/hbirdv2/*.
+  Here we mainly support Hummingbird SoC running in FPGA evaluation board, the support package placed in *SoC/hbird/* and *SoC/hbirdv2/*.
 
   In each SoC's include directory, *hbird_sdk_soc.h* must be provided, and include the soc header file, for example, *SoC/hbird/Common/Include/hbird_sdk_soc.h*.
 
@@ -113,7 +116,7 @@ $HBIRD_SDK_ROOT
 
 * **OS**
 
-  This directory provided two RTOS package we suppported which are **FreeRTOS** and **UCOSII**.
+  This directory provided three RTOS package we suppported which are **FreeRTOS**, **UCOSII** and **RTThread**.
 
 * **LICENSE**
 
@@ -191,13 +194,13 @@ $HBIRD_SDK_ROOT
    * For **Linux**: `source setup.sh`
    * For **Windows**: `setup.bat`
 3. Build and run application.
-   * **Note:** By default, the SoC and Board is set to ``hbird`` and ``hbird_eval``,
+   * **Note:** By default, the SoC and Board is set to ``hbirdv2`` and ``ddr200t``,
      if you don't pass any **SOC** and **BOARD** variable in Make command,
      it will use the default SoC and Board.
    * Assume that you will run this application -> *application/baremetal/helloworld/*.
    * cd *application/baremetal/helloworld/*
    * you can run *make help* to show help message.
-   * We provided different Nuclei Core configurations(CORE=<your_core>) we supported, see *Build/Makefile.core*.
+   * We provided different processor core configurations(CORE=<your_core>) we supported, see *Build/Makefile.core*.
      - such as `CORE=e203`
    * We support three download modes(DOWNLOAD=<mode>) for different applications.
      - **flashxip**: Program will to be download into flash and run directly in Flash
@@ -225,7 +228,7 @@ $HBIRD_SDK_ROOT
 
 ## Knowledge book
 
-* If you want to learn more about **HummingBird SDK documentation**, please click [HummingBird SDK documentation](http://doc.nucleisys.com/hbird_sdk)
+* If you want to learn more about **HummingBird SDK**, please click [HummingBird SDK documentation](https://doc.nucleisys.com/hbirdv2/quick_start/sdk.html)
 
 * If you need to build a new application, or change **CORE** or **DOWNLOAD** option, please make sure that you have clean the project by `make clean`
 
@@ -240,15 +243,12 @@ $HBIRD_SDK_ROOT
 
 * Pass extra `V=1` to your make command, it will show verbose compiling information, otherwise it will only show basic information. Sample output with extra `V=1`
   ~~~console
-  $ make V=1 CORE=e205fd all
-  Current Configuration: RISCV_ARCH=rv32imafdc RISCV_ABI=ilp32d SOC=hbird BOARD=hbird_eval CORE=e205fd DOWNLOAD=ilm
-  "Assembling : " ../../../OS/FreeRTOS/Source/portable/GCC/portasm.S
-  riscv-nuclei-elf-gcc -g -march=rv32imafdc -mabi=ilp32d -mcmodel=medany -ffunction-sections -fdata-sections -fno-common   -DDOWNLOAD_MODE=DOWNLOAD_MODE_ILM -I. -I../../../NMSIS/Include -I../../../OS/FreeRTOS/Source/include -I../../../OS/FreeRTOS/Source/  portable/GCC -I../../../SoC/hbird/Board/hbird_eval/Include -I../../../SoC/hbird/Common/Include -MMD -MT ../../../OS/FreeRTOS/Source/  portable/GCC/portasm.S.o -MF ../../../OS/FreeRTOS/Source/portable/GCC/portasm.S.o.d -c -o ../../../OS/FreeRTOS/Source/portable/GCC/  portasm.S.o ../../../OS/FreeRTOS/Source/portable/GCC/portasm.S
-  "Assembling : " ../../../SoC/hbird/Common/Source/GCC/intexc_hbird.S
-  riscv-nuclei-elf-gcc -g -march=rv32imafdc -mabi=ilp32d -mcmodel=medany -ffunction-sections -fdata-sections -fno-common   -DDOWNLOAD_MODE=DOWNLOAD_MODE_ILM -I. -I../../../NMSIS/Include -I../../../OS/FreeRTOS/Source/include -I../../../OS/FreeRTOS/Source/  portable/GCC -I../../../SoC/hbird/Board/hbird_eval/Include -I../../../SoC/hbird/Common/Include -MMD -MT ../../../SoC/hbird/Common/  Source/GCC/intexc_hbird.S.o -MF ../../../SoC/hbird/Common/Source/GCC/intexc_hbird.S.o.d -c -o ../../../SoC/hbird/Common/Source/GCC/  intexc_hbird.S.o ../../../SoC/hbird/Common/Source/GCC/intexc_hbird.S
-  "Assembling : " ../../../SoC/hbird/Common/Source/GCC/startup_hbird.S
+  $ make V=1 CORE=e203 all
+  Current Configuration: RISCV_ARCH=rv32imac RISCV_ABI=ilp32 SOC=hbirdv2 BOARD=ddr200t CORE=e203 DOWNLOAD=ilm
+  Assembling :  ../../../SoC/hbirdv2/Common/Source/GCC/intexc_hbirdv2.S
+  riscv-nuclei-elf-gcc -O2 -g -march=rv32imac -mabi=ilp32 -mcmodel=medany -ffunction-sections -fdata-sections -fno-common -DDOWNLOAD_MODE=DOWNLOAD_MODE_ILM -DSOC_HBIRDV2 -DBOARD_DDR200T -I. -I../../../NMSIS/Core/Include -I../../../SoC/hbirdv2/Board/ddr200t/Include -I../../../SoC/hbirdv2/Common/Include -Iinc -MMD -MT ../../../SoC/hbirdv2/Common/Source/GCC/intexc_hbirdv2.S.o -MF ../../../SoC/hbirdv2/Common/Source/GCC/intexc_hbirdv2.S.o.d -c -o ../../../SoC/hbirdv2/Common/Source/GCC/intexc_hbirdv2.S.o ../../../SoC/hbirdv2/Common/Source/GCC/intexc_hbirdv2.S
+  Assembling :  ../../../SoC/hbirdv2/Common/Source/GCC/startup_hbirdv2.S
+  riscv-nuclei-elf-gcc -O2 -g -march=rv32imac -mabi=ilp32 -mcmodel=medany -ffunction-sections -fdata-sections -fno-common -DDOWNLOAD_MODE=DOWNLOAD_MODE_ILM -DSOC_HBIRDV2 -DBOARD_DDR200T -I. -I../../../NMSIS/Core/Include -I../../../SoC/hbirdv2/Board/ddr200t/Include -I../../../SoC/hbirdv2/Common/Include -Iinc -MMD -MT ../../../SoC/hbirdv2/Common/Source/GCC/startup_hbirdv2.S.o -MF ../../../SoC/hbirdv2/Common/Source/GCC/startup_hbirdv2.S.o.d -c -o ../../../SoC/hbirdv2/Common/Source/GCC/startup_hbirdv2.S.o ../../../SoC/hbirdv2/Common/Source/GCC/startup_hbirdv2.S
   ~~~
 
-## [Contributing](https://doc.nucleisys.com/hbird_sdk/contribute.html)
-
-## [Changelog](https://doc.nucleisys.com/hbird_sdk/changelog.html)
+## [Changelog](https://doc.nucleisys.com/hbirdv2/changelog.html)

@@ -565,24 +565,32 @@ In HummingBird SDK, we provided code and Makefile for this ``freertos demo`` app
     Download Mode: ILM
     CPU Frequency 15998320 Hz
     Before StartScheduler
-    task_1
-    task1_running.....
-    task_2
-    task2_running.....
-    timers Callback
-    timers Callback
-    task1_running.....
-    task2_running.....
-    timers Callback
-    timers Callback
-    task1_running.....
-    task2_running.....
-    timers Callback
-    timers Callback
-    task1_running.....
-    task2_running.....
-    timers Callback
-    timers Callback
+    Enter to task_1
+    task1 is running 0.....
+    Enter to task_2
+    task2 is running 0.....
+    timers Callback 0
+    timers Callback 1
+    task1 is running 1.....
+    task2 is running 1.....
+    timers Callback 2
+    timers Callback 3
+    task1 is running 2.....
+    task2 is running 2.....
+    timers Callback 4
+    timers Callback 5
+    task1 is running 3.....
+    task2 is running 3.....
+    timers Callback 6
+    timers Callback 7
+    task1 is running 4.....
+    task2 is running 4.....
+    timers Callback 8
+    timers Callback 9
+    task1 is running 5.....
+    task2 is running 5.....
+    timers Callback 10
+    timers Callback 11
 
 
 UCOSII applications
@@ -760,6 +768,52 @@ In HummingBird SDK, we provided code and Makefile for this ``rtthread demo`` app
     thread 3 count: 9
     thread 4 count: 9
 
+msh
+~~~
+
+This `rt-thread msh application`_ demonstrates a shell in serial console which is a component of rt-thread.
+
+* ``MSH_CMD_EXPORT(hbird, msh hbird demo)`` exports a command ``hbird`` to shell
+
+In HummingBird SDK, we provided code and Makefile for this ``rtthread msh`` application.
+
+* **RTOS = RTThread** is added in its Makefile to include RT-Thread service
+* **RTTHREAD_MSH := 1** is added in its Makefile to include RT-Thread msh component
+* The **RT_TICK_PER_SECOND** in ``rtconfig.h`` is by default set to `200`, you can change it
+  to other number according to your requirement.
+
+
+**How to run this application:**
+
+.. code-block:: shell
+
+    # Assume that you can set up the Tools and HummingBird SDK environment
+    # cd to the rtthread msh directory
+    cd application/rtthread/msh
+    # Clean the application first
+    make SOC=hbird BOARD=hbird_eval CORE=e203 clean
+    # Build and upload the application
+    make SOC=hbird BOARD=hbird_eval CORE=e203 upload
+
+**Expected output as below:**
+
+.. code-block:: console
+
+    HummingBird SDK Build Time: Nov 25 2020, 09:18:36
+    Download Mode: FLASH
+    CPU Frequency 15978659 Hz
+
+    \ | /
+    - RT -     Thread Operating System
+    / | \     3.1.3 build Nov 25 2020
+    2006 - 2019 Copyright by rt-thread team
+    Hello RT-Thread!
+    msh >
+    RT-Thread shell commands:
+    list_timer list_mailbox list_sem list_thread version ps help hbird 
+    msh >hbird
+    Hello HBird SDK!
+    msh >
 
 
 .. _helloworld application: https://github.com/riscv-mcu/hbird-sdk/tree/master/application/baremetal/helloworld
@@ -772,3 +826,4 @@ In HummingBird SDK, we provided code and Makefile for this ``rtthread demo`` app
 .. _freertos demo application: https://github.com/riscv-mcu/hbird-sdk/tree/master/application/freertos/demo
 .. _ucosii demo application: https://github.com/riscv-mcu/hbird-sdk/tree/master/application/ucosii/demo
 .. _rt-thread demo application: https://github.com/riscv-mcu/hbird-sdk/tree/master/application/rtthread/demo
+.. _rt-thread msh application: https://github.com/riscv-mcu/hbird-sdk/tree/master/application/rtthread/msh

@@ -466,8 +466,10 @@ void _premain_init(void)
 {
     /* TODO: Add your own initialization code here, called before main */
     SystemCoreClock = get_cpu_freq();
+#if ! defined(SIMULATION_SPIKE) && ! defined(SIMULATION_XLSPIKE)
     gpio_iof_config(GPIOA, IOF_UART_MASK);
     uart_init(SOC_DEBUG_UART, 115200);
+#endif
     /* Display banner after UART initialized */
     SystemBannerPrint();
     /* Initialize exception default handlers */
@@ -488,10 +490,17 @@ void _premain_init(void)
  * by __libc_fini_array function, so we defined a new function
  * to do initialization
  */
-void _postmain_fini(void)
+void _postmain_fini(int status)
 {
     /* TODO: Add your own finishing code here, called after main */
-
+#ifdef SIMULATION_XLSPIKE
+extern void xlspike_exit(int status);
+    xlspike_exit(status);
+#endif
+#ifdef SIMULATION_SPIKE
+extern void spike_exit(int status);
+    spike_exit(status);
+#endif
 }
 
 /**

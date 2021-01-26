@@ -43,7 +43,7 @@ make sure the following items are set correctly:
 How to use
 ~~~~~~~~~~
 
-For **HummingBird Evaluation board**:
+For **DDR200T Evaluation board**:
 
 * **DOWNLOAD** support all the modes list in :ref:`develop_buildsystem_var_download`
 * **CORE** support all the cores list in :ref:`develop_buildsystem_var_core`
